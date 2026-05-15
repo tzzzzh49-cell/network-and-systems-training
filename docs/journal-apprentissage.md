@@ -618,3 +618,23 @@ Une personne extérieure doit pouvoir lire le projet et comprendre :
 - comment je le sécurise ;
 - ce que j’ai appris ;
 - comment je progresse vers le DevOps et le Network Automation.
+
+## Étape 3 — Mini API locale
+
+J’ai créé une mini API Python avec FastAPI.
+
+Elle contient trois routes principales :
+
+- /health : vérifie que le service fonctionne ;
+- /version : affiche la version de l’application ;
+- /diag : affiche des informations simples sur la machine et Python.
+
+J’ai lancé l’API avec Uvicorn et je l’ai testée avec curl.
+
+Ce que j’ai compris :
+
+Une API est un service qui répond à des requêtes HTTP.
+
+Uvicorn sert à lancer l’application FastAPI.
+
+L’endpoint /health est utile pour les diagnostics, Docker, les scripts de vérification et plus tard l’automatisation.
