@@ -638,3 +638,30 @@ Une API est un service qui répond à des requêtes HTTP.
 Uvicorn sert à lancer l’application FastAPI.
 
 L’endpoint /health est utile pour les diagnostics, Docker, les scripts de vérification et plus tard l’automatisation.
+
+## Étape 4 — Script de diagnostic local
+
+J’ai créé un script Bash nommé `scripts/diagnostic_local.sh`.
+
+Son rôle est de produire un rapport Markdown dans `outputs/reports/`.
+
+Le script collecte plusieurs informations :
+
+- date du diagnostic ;
+- nom de la machine ;
+- version du système ;
+- interfaces réseau ;
+- routes réseau ;
+- ports ouverts ;
+- espace disque ;
+- mémoire ;
+- conteneurs Docker ;
+- test de l’endpoint `/health`.
+
+Ce que j’ai compris :
+
+Un script de diagnostic sert à créer une photographie de l’état du système à un moment donné.
+
+Ce rapport pourra servir de preuve avant ou après un changement.
+
+Ce script ne modifie rien sur la machine. Il observe seulement.

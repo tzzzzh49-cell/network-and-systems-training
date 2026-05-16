@@ -1,0 +1,11 @@
+.venv/
+__pycache__/
+*.pyc
+
+outputs/raw/*
+outputs/backups/*
+outputs/reports/*
+
+!outputs/raw/.gitkeep
+!outputs/backups/.gitkeep
+!outputs/reports/.gitkeep
