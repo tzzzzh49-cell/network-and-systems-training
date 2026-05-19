@@ -1,0 +1,9 @@
+services:
+  api:
+    build: ./app
+    container_name: lab-api
+    environment:
+      APP_ENV: lab
+    ports:
+      - "127.0.0.1:8000:8000"
+    restart: unless-stopped

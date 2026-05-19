@@ -665,3 +665,15 @@ Un script de diagnostic sert à créer une photographie de l’état du système
 Ce rapport pourra servir de preuve avant ou après un changement.
 
 Ce script ne modifie rien sur la machine. Il observe seulement.
+
+## Blocage Docker sur Fedora
+
+L’API fonctionne localement avec Uvicorn.
+
+Le fichier compose.yaml est valide avec `docker compose config`.
+
+Le lancement avec Docker est bloqué par un problème de droits sur `/var/run/docker.sock` et par le fait que le plugin Compose est installé dans le dossier utilisateur.
+
+Conclusion : le problème vient de l’environnement Fedora/Docker, pas du code de l’application.
+
+Prochaine action : continuer l’apprentissage avec l’API locale, puis revenir sur Docker après avoir clarifié l’installation système.
