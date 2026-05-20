@@ -1,115 +1,39 @@
-# Audit Santé & Topologie Réseau (niveau débutant)
+# Clean System Update Scripts (Fedora 44 / Ubuntu 24.04 / RHEL 8-10)
 
-Ce mini-projet t'aide à apprendre **l'automatisation système/réseau** pas à pas.
+## But du projet
+Ce projet fournit des scripts Bash prudents pour réaliser des **mises à jour de paquets** (et non des upgrades majeurs de distribution) sur Fedora, Ubuntu et RHEL, avec journalisation, confirmations, mode simulation et nettoyage contrôlé.
 
-Le programme fait 2 missions principales:
+## Mise à jour de paquets vs mise à niveau de version
+- **Mise à jour de paquets**: installe des versions plus récentes de paquets dans la même version de l'OS.
+- **Mise à niveau de version**: change la version majeure de l'OS (ex. Fedora 44 -> 45, Ubuntu 24.04 -> 26.04). Ce projet **ne fait pas** cela.
 
-1. **Bilan santé du poste**
-   - Profil système (OS, kernel, hostname)
-   - Uptime
-   - Charge CPU (load average)
-   - Mémoire (`/proc/meminfo`)
-   - Disques (`df -PTh`)
-   - Interfaces réseau (`ip -j addr`)
-   - Routes (`ip route`)
-   - DNS (`/etc/resolv.conf`)
-
-2. **Collecte topologie**
-   - Ping de cibles (ex: 8.8.8.8)
-   - Traceroute (si installé)
-   - Voisins ARP/NDP (`ip neigh`)
-   - Scan ping limité des sous-réseaux locaux (optionnel)
-   - Export d'un graphe `.dot` (Graphviz)
-
----
-
-## Structure
-
-- `scripts/net_health_audit.py` → script principal (Python)
-- `scripts/diag_reseau.sh` → lanceur Bash
-- `outputs/` → rapports générés (`.json` + `.dot`)
-
----
-
-## Exécution rapide
-
+## Exemples d'utilisation
 ```bash
-./scripts/diag_reseau.sh
+sudo ./scripts/fedora44-clean-update.sh --dry-run
+sudo ./scripts/fedora44-clean-update.sh --include-flatpak --include-firmware
+sudo ./scripts/ubuntu2404-clean-update.sh --dry-run
+sudo ./scripts/ubuntu2404-clean-update.sh --include-snap --include-flatpak
+sudo ./scripts/rhel-clean-update.sh --security-only
+sudo ./scripts/rhel-libvirt-vm-update-wrapper.sh --vm rhel-test-01 --dry-run
 ```
 
-Avec scan local limité:
+## Ce que le script ne fait pas
+- Ne lance pas de `do-release-upgrade`.
+- Ne fait pas de `dnf distro-sync` par défaut.
+- Ne supprime pas automatiquement des paquets sans confirmation explicite (ou `--yes`).
+- Ne redémarre pas automatiquement sans option `--reboot`.
+- Ne supprime jamais les snapshots VM automatiquement.
 
-```bash
-./scripts/diag_reseau.sh --scan --max-scan-hosts 16 --target 192.168.1.1
-```
+## Risques et précautions
+- Toujours exécuter d'abord en `--dry-run`.
+- Vérifier l'espace disque et la santé réseau.
+- Prévoir un backup/snapshot avant maintenance.
+- Lire `docs/SAFETY.md` avant usage en production.
 
-Le script affiche les chemins de sortie:
-
-- `outputs/health-topology-report-<timestamp>.json`
-- `outputs/topology-<timestamp>.dot`
-
-Si Graphviz est installé:
-
-```bash
-dot -Tpng outputs/topology-<timestamp>.dot -o outputs/topology-<timestamp>.png
-```
-
----
-
-## Comprendre le fonctionnement (très important)
-
-### 1) Pourquoi `run_command()` ?
-
-Dans la vraie vie admin, un outil peut manquer (`traceroute`, `ip`, etc.).
-On évite de bloquer tout le programme: on capture l'erreur et on continue la collecte.
-
-### 2) Partie "HealthCollector"
-
-Chaque méthode lit une source différente:
-
-- `collect_system_profile()` → infos Python/OS
-- `collect_uptime()` → `/proc/uptime` (Linux)
-- `collect_load_average()` → `/proc/loadavg`
-- `collect_memory()` → `/proc/meminfo`
-- `collect_disk()` → `df`
-- `collect_interfaces()` → `ip -j addr` (JSON natif Linux)
-- `collect_routes()` → `ip route`
-- `collect_dns()` → `/etc/resolv.conf`
-
-### 3) Partie "TopologyCollector"
-
-- `ping_target()` teste si une cible répond.
-- `traceroute_target()` récupère les sauts réseau.
-- `get_arp_neighbors()` lit les voisins de couche 2/3.
-- `discover_hosts()` construit les sous-réseaux locaux depuis les interfaces puis ping une liste **limitée** d'hôtes.
-
-### 4) Génération topologie
-
-`build_graphviz_topology()` transforme les informations en graphe `.dot`.
-Ensuite Graphviz peut convertir en image `.png`.
-
----
-
-## Bonnes pratiques (sécurité & éthique)
-
-- Scanne uniquement des réseaux autorisés.
-- Commence avec des limites basses (`--max-scan-hosts 16`).
-- Exécute en labo (VM, réseau de test) avant production.
-
----
-
-## Pour progresser vers Network Automation Engineer
-
-Étapes conseillées:
-
-1. Ajouter export CSV (en plus du JSON)
-2. Ajouter seuils d'alerte (RAM > 90%, disque > 85%)
-3. Envoyer le rapport vers une API (FastAPI/Flask)
-4. Stocker dans une base (SQLite/PostgreSQL)
-5. Planifier exécution automatique (cron / systemd timer)
-6. Versionner + CI (GitHub Actions)
-
-Tu peux me demander ensuite:
-- une **version orientée entreprise** (multi-hôtes via SSH)
-- une **version orientée supervision** (Prometheus/Grafana)
-- une **version orientée cartographie** (NetBox + Nmap + LLDP)
+## Fichiers
+- `scripts/fedora44-clean-update.sh`
+- `scripts/ubuntu2404-clean-update.sh`
+- `scripts/rhel-clean-update.sh`
+- `scripts/rhel-libvirt-vm-update-wrapper.sh`
+- `docs/USAGE.md`
+- `docs/SAFETY.md`
