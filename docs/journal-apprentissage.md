@@ -677,3 +677,30 @@ Le lancement avec Docker est bloqué par un problème de droits sur `/var/run/do
 Conclusion : le problème vient de l’environnement Fedora/Docker, pas du code de l’application.
 
 Prochaine action : continuer l’apprentissage avec l’API locale, puis revenir sur Docker après avoir clarifié l’installation système.
+
+## Étape Docker Compose
+
+J’ai réussi à lancer ma mini API FastAPI dans un conteneur Docker avec Docker Compose.
+
+Commande utilisée :
+
+docker compose up --build -d
+
+Ce que j’ai compris :
+
+- Dockerfile décrit comment construire l’image de l’application.
+- compose.yaml décrit comment lancer le service.
+- docker compose config vérifie la configuration.
+- docker compose up --build -d construit et lance le conteneur.
+- docker compose ps vérifie si le conteneur tourne.
+- docker compose logs permet de lire les logs.
+- curl /health permet de vérifier que l’API répond.
+
+Problème rencontré :
+
+Docker Compose n’était pas immédiatement disponible sur ma machine Fedora.
+Il a fallu corriger l’installation du plugin Compose et les droits d’accès Docker.
+
+Conclusion :
+
+Le problème ne venait pas du code de l’application mais de l’environnement Docker local.
