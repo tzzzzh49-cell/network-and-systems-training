@@ -1,9 +1,23 @@
+name: voice-controlled-network-lab
+
 services:
   api:
-    build: ./app
+    build:
+      context: ./app
+    image: voice-controlled-network-lab-api:0.1.0
     container_name: lab-api
     environment:
       APP_ENV: lab
     ports:
       - "127.0.0.1:8000:8000"
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health', timeout=3).read()"
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
     restart: unless-stopped
