@@ -704,3 +704,35 @@ Il a fallu corriger l’installation du plugin Compose et les droits d’accès 
 Conclusion :
 
 Le problème ne venait pas du code de l’application mais de l’environnement Docker local.
+
+ ## Semaine 1 — Stabilisation du dépôt
+
+### Objectif
+
+Rendre le projet plus cohérent, reproductible et compréhensible.
+
+### Ce que j’ai fait
+
+- vérification de la structure du dépôt
+- création d’une branche dédiée
+- harmonisation entre README, Makefile et scripts
+- amélioration des commandes Makefile
+- test de reproduction depuis zéro
+- mise à jour de la documentation
+
+### Ce que j’ai appris
+
+- l’importance de la cohérence entre documentation et code
+- l’intérêt d’un Makefile pour simplifier l’utilisation du projet
+- pourquoi tester depuis un clone propre
+- comment documenter une reproduction réussie
+
+### Difficultés rencontrées
+
+- incohérence entre un nom de script et la commande documentée
+- nécessité de vérifier chaque commande réellement
+- distinction entre “ça marche dans mon dossier” et “ça marche depuis zéro”
+
+### Prochaine étape
+
+Améliorer la documentation technique et préparer les tests automatisés.
