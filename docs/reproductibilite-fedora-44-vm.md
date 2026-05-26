@@ -1,9 +1,9 @@
-# Test de reproduction — Fedora 44 VM
+## Validation finale du mois 1
 
-**Date :** 2026-05-26  
-**Machine :** VM Fedora 44 Workstation  
-**Utilisateur :** thomas  
-**Dépôt :** `network-and-systems-training`
+Date : 2026-05-26
+Environnement : Fedora 44 Workstation VM  
+Branche testée : master  
+Version prévue : v0.1.0
 
 ## Objectif
 
