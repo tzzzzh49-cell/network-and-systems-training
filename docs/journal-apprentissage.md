@@ -316,3 +316,56 @@ Créer les premiers tests automatisés et préparer la CI GitHub Actions.
 - Nettoyer le README si nécessaire.
 - Préparer une documentation VPS séparée.
 - Garder OpenAI API et OpenClaw en lecture seule au départ.
+
+## Bilan du mois 1 — Stabilisation locale du projet
+
+### Objectif du mois
+
+L’objectif du premier mois était de stabiliser le dépôt, améliorer sa lisibilité et vérifier que le projet pouvait être reproduit sur une VM Fedora 44.
+
+### Travail réalisé
+
+- correction d’une incohérence entre le Makefile local et le Makefile visible sur GitHub ;
+- amélioration des commandes Makefile ;
+- vérification du lancement Docker Compose ;
+- test des endpoints `/health`, `/version` et `/diag` ;
+- amélioration du README ;
+- ajout ou amélioration de la documentation technique ;
+- documentation du mode lecture seule ;
+- documentation de la reproduction sur Fedora 44.
+
+### Ce que j’ai appris
+
+- un projet peut fonctionner localement sans être correctement synchronisé avec GitHub ;
+- une branche locale peut contenir des corrections absentes de `master` ;
+- `git push origin master` envoie le `master` local vers GitHub ;
+- `git pull --ff-only origin master` permet d’aligner l’historique local sans créer de commit de merge inattendu ;
+- un Makefile rend un projet beaucoup plus facile à utiliser ;
+- la reproductibilité est une compétence importante en DevOps ;
+- documenter les erreurs permet de montrer une vraie progression.
+
+### Difficultés rencontrées
+
+- confusion entre branche locale et branche distante ;
+- ancien nom de script encore présent sur GitHub ;
+- compréhension des commits de merge ;
+- vérification de la cohérence entre README, Makefile et scripts.
+
+### Résultat obtenu
+
+À la fin du mois 1, le projet est :
+- clonable ;
+- lançable localement ;
+- testé manuellement ;
+- documenté ;
+- reproductible sur VM Fedora 44 ;
+- prêt pour l’ajout de tests automatisés.
+
+### Prochaine étape
+
+Le mois 2 sera consacré à :
+- ajouter `pytest` ;
+- ajouter `ruff` ;
+- vérifier les scripts Bash avec `shellcheck` ;
+- ajouter une CI GitHub Actions ;
+- préparer la version `v0.2.0`.
