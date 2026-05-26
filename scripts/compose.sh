@@ -13,13 +13,13 @@ find_compose_cmd() {
         return
     fi
 
-    if command -v sudo >/dev/null 2>&1 && sudo docker ps >/dev/null 2>&1 && sudo docker compose version >/dev/null 2>&1; then
-        COMPOSE_CMD=(sudo docker compose)
+    if command -v sudo >/dev/null 2>&1 && sudo -n docker ps >/dev/null 2>&1 && sudo -n docker compose version >/dev/null 2>&1; then
+        COMPOSE_CMD=(sudo -n docker compose)
         return
     fi
 
-    if command -v sudo >/dev/null 2>&1 && command -v docker-compose >/dev/null 2>&1 && sudo docker ps >/dev/null 2>&1 && sudo docker-compose version >/dev/null 2>&1; then
-        COMPOSE_CMD=(sudo docker-compose)
+    if command -v sudo >/dev/null 2>&1 && command -v docker-compose >/dev/null 2>&1 && sudo -n docker ps >/dev/null 2>&1 && sudo -n docker-compose version >/dev/null 2>&1; then
+        COMPOSE_CMD=(sudo -n docker-compose)
         return
     fi
 
@@ -27,6 +27,12 @@ find_compose_cmd() {
     echo "Sur Fedora 44, lance d'abord : ./scripts/bootstrap_fedora44_vm.sh" >&2
     exit 1
 }
+
+if [[ "$#" -eq 0 ]]; then
+    echo "Usage: $0 <arguments docker compose>" >&2
+    echo "Exemple: $0 -f compose.yaml up -d" >&2
+    exit 1
+fi
 
 COMPOSE_CMD=()
 find_compose_cmd
