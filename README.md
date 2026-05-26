@@ -1,58 +1,51 @@
-# voice-controlled-network-lab
+ # Network and Systems Training
 
-Mini lab local pour apprendre Docker, Ansible, les diagnostics Linux et les bases d'une API Python.
+Projet d’apprentissage autour de Linux, des réseaux, de Docker, de FastAPI, de l’automatisation et de la cybersécurité défensive.
 
-## Demarrage rapide sur Fedora 44 Workstation
+L’objectif est de construire progressivement un lab capable de :
 
-Dans une VM Fedora 44 neuve :
+- exposer une API FastAPI minimale ;
+- lancer des diagnostics système et réseau en lecture seule ;
+- produire des rapports techniques ;
+- être déployé plus tard sur un VPS ;
+- intégrer progressivement les API OpenAI et OpenClaw de manière sécurisée.
+
+## Statut actuel
+
+- Reproduction testée sur une VM Fedora 44
+- API FastAPI fonctionnelle
+- Docker Compose fonctionnel
+- Makefile en cours de stabilisation
+- Documentation en cours
+- Tests automatisés prévus au deuxième mois
+
+## Sécurité
+
+Le projet démarre volontairement en mode lecture seule.  
+Aucune commande destructive ne doit être automatisée à ce stade.
+
+## Démarrage rapide
 
 ```bash
-cd ~/Documents/labs/voice-controlled-network-lab
-./scripts/bootstrap_fedora44_vm.sh
-```
-
-Puis teste l'API :
-
-```bash
-curl http://127.0.0.1:8000/health
-```
-
-Reponse attendue :
-
-```json
-{"status":"ok","service":"lab-api"}
-```
-
-## Commandes courantes
-
-```bash
+git clone <url-du-repo>
+cd network-and-systems-training
+make build
 make up
-```
-
-Lance l'API.
-
-```bash
-make logs
-```
-
-Affiche les logs.
-
-```bash
+make health
+make version
+make diag
 make down
 ```
 
-Arrete l'API.
+## Commandes disponibles
 
-```bash
-make diag
-```
-
-Genere un rapport local dans `outputs/reports/`.
-
-## Documentation
-
-Le guide detaille pour une VM QEMU/KVM/libvirt Fedora 44 est ici :
-
-```text
-docs/reproductibilite-fedora-44-vm.md
-```
+| Commande | Description |
+|---|---|
+| `make help` | Affiche les commandes disponibles |
+| `make build` | Construit l’image Docker |
+| `make up` | Lance l’application |
+| `make health` | Vérifie `/health` |
+| `make version` | Vérifie `/version` |
+| `make diag` | Vérifie `/diag` |
+| `make logs` | Affiche les logs Docker |
+| `make down` | Arrête l’application |
