@@ -1,4 +1,4 @@
- # Network and Systems Training
+# # Network and Systems Training
 
 Projet d’apprentissage autour de Linux, des réseaux, de Docker, de FastAPI, de l’automatisation et de la cybersécurité défensive.
 
@@ -27,28 +27,31 @@ Aucune commande destructive ne doit être automatisée à ce stade.
 ## Démarrage rapide
 
 ```bash
-git clone <url-du-repo>
+git clone https://github.com/tzzzzh49-cell/network-and-systems-training.git
 cd network-and-systems-training
+make check
 make build
 make up
 make health
 make version
 make diag
 make down
-```
 
-## Commandes disponibles
+## Commandes principales
 
 | Commande | Description |
 |---|---|
 | `make help` | Affiche les commandes disponibles |
+| `make check` | Vérifie les prérequis locaux |
+| `make bootstrap` | Prépare l’environnement Fedora 44 |
 | `make build` | Construit l’image Docker |
 | `make up` | Lance l’application |
-| `make health` | Vérifie `/health` |
-| `make version` | Vérifie `/version` |
-| `make diag` | Vérifie `/diag` |
+| `make health` | Vérifie l’endpoint `/health` |
+| `make version` | Vérifie l’endpoint `/version` |
+| `make diag` | Vérifie l’endpoint `/diag` |
 | `make logs` | Affiche les logs Docker |
 | `make down` | Arrête l’application |
+| `make clean` | Effectue un nettoyage léger |
 
 ## Documentation
 
