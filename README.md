@@ -49,3 +49,13 @@ make down
 | `make diag` | Vérifie `/diag` |
 | `make logs` | Affiche les logs Docker |
 | `make down` | Arrête l’application |
+
+## Documentation
+
+- [Architecture](docs/architecture.md)
+- [Sécurité](docs/securite.md)
+- [Reproductibilité Fedora 44](docs/reproductibilite-fedora-44-vm.md)
+- [Journal d’apprentissage](docs/journal-apprentissage.md)
+- [ADR-001 — Mode lecture seule](docs/decisions/ADR-001-mode-read-only.md)
+
+Le projet est documenté progressivement afin de montrer les choix techniques, les règles de sécurité et les apprentissages réalisés.
