@@ -2,72 +2,148 @@
 
 ## Objectif
 
-Ce document explique les règles de sécurité de mon projet `voice-controlled-network-lab`.
+Ce projet manipule des commandes systèmes et réseaux.  
+La sécurité doit donc être prise en compte dès le début.
 
-Le but du projet est d’apprendre à piloter un lab DevOps / réseau avec des outils comme Linux, SSH, Git, Docker, Ansible, Codex CLI et OpenClaw.
+Le projet démarre volontairement en mode lecture seule.
 
-La règle principale est simple :
+## Principe principal
 
-> Au début, aucune commande vocale ou mobile ne doit modifier directement le système ou le réseau.
+Aucune commande destructive ne doit être automatisée au stade actuel.
 
-Le projet doit d’abord être capable de faire des diagnostics, produire des rapports, sauvegarder des états et expliquer ce qui se passe.
+Le projet doit d’abord :
 
----
+- observer ;
+- diagnostiquer ;
+- documenter ;
+- expliquer ;
+- proposer des pistes.
 
-## Principe de départ
+Il ne doit pas encore modifier automatiquement le système.
 
-Je commence en mode **read-only**.
+## Commandes autorisées au début
 
-Cela signifie que les premières actions autorisées sont seulement :
+Les commandes autorisées doivent être non destructives.
 
-- lire l’état du système ;
-- vérifier les services ;
-- afficher les interfaces réseau ;
-- afficher les routes ;
-- tester la disponibilité d’une API ;
-- générer un rapport Markdown ;
-- sauvegarder une configuration ;
-- résumer un rapport.
+Exemples :
 
-Les actions de modification viendront plus tard, seulement quand les diagnostics seront fiables.
-
----
-
-## Ce qui est autorisé au début
-
-Commandes ou actions acceptées :
-
-```
-./scripts/diagnostic_local.sh
-python scripts/generate_report.py
-ansible-playbook ansible/playbooks/diagnostic.yml
-docker compose ps
-docker compose logs --tail=50
-curl http://127.0.0.1:8000/health
-ip a
+```bash
+ip addr
 ip route
 ss -tulpn
+df -h
+free -h
+uptime
+hostnamectl
 systemctl status
-journalctl -n 100
-```
+journalctl --no-pager
+````
 
-## Ce qui est interdit au début 
+## Commandes interdites au début
 
-Commandes ou actions interdites :
+Les commandes suivantes ne doivent pas être automatisées :
 
-```
-
+```bash
 rm -rf
-sudo sans justification
-chmod -R
-chown -R
+mkfs
+dd
+reboot
+shutdown
+ip route del
+ip addr flush
+firewall-cmd --remove
+docker rm
 docker system prune
-terraform apply
-kubectl delete
-bash arbitraire
-sh arbitraire
-python -c
-modification réseau directe
-suppression de fichiers
-exposition publique d’un service sensible
+sudo sans justification
+```
+
+## Règles pour les scripts
+
+Chaque script doit respecter ces règles :
+
+* être lisible ;
+* avoir un nom clair ;
+* afficher ce qu’il fait ;
+* éviter les actions irréversibles ;
+* ne pas contenir de secret ;
+* pouvoir être relu avant exécution.
+
+## Règles pour Docker
+
+L’application doit d’abord être exposée localement.
+
+Recommandation actuelle :
+
+```text
+127.0.0.1:8000
+```
+
+Éviter d’exposer publiquement `/diag` sans authentification.
+
+## Règles pour OpenAI API
+
+L’API OpenAI ne doit pas exécuter de commandes.
+
+Usage autorisé au début :
+
+* résumer un rapport ;
+* expliquer une erreur ;
+* proposer une checklist ;
+* classer les risques.
+
+Usage interdit au début :
+
+* décider seule d’une action ;
+* exécuter une commande ;
+* modifier la configuration système ;
+* lancer des actions réseau agressives.
+
+## Règles pour OpenClaw
+
+OpenClaw devra être limité par une allowlist.
+
+Au début, OpenClaw pourra seulement :
+
+* lire un rapport ;
+* appeler un script de diagnostic lecture seule ;
+* demander un résumé IA.
+
+OpenClaw ne devra pas pouvoir exécuter :
+
+* commandes `sudo` ;
+* commandes de suppression ;
+* modifications réseau ;
+* actions Docker destructives ;
+* playbooks Ansible hors mode contrôle.
+
+## Gestion des secrets
+
+Ne jamais commiter :
+
+* `.env`
+* clés API
+* tokens GitHub
+* clés SSH privées
+* mots de passe
+* secrets OpenClaw
+
+Utiliser plutôt :
+
+* `.env.example`
+* variables d’environnement
+* GitHub Secrets plus tard
+
+## Objectif sécurité à long terme
+
+Le projet doit évoluer vers un lab capable de diagnostiquer et expliquer, mais pas de prendre le contrôle sans validation humaine.
+
+## Vérification
+
+Cherche les mots sensibles dans ton dépôt :
+
+```bash
+git grep -n "OPENAI_API_KEY\|password\|token\|secret\|PRIVATE KEY" || true
+```
+
+```
 ```
