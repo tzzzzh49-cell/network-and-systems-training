@@ -736,3 +736,91 @@ Rendre le projet plus cohérent, reproductible et compréhensible.
 ### Prochaine étape
 
 Améliorer la documentation technique et préparer les tests automatisés.
+
+## Semaine 2 — Documentation technique et sécurité
+
+### Objectif
+
+Structurer la documentation du projet afin de mieux expliquer l’architecture, la sécurité et les décisions techniques.
+
+### Travail réalisé
+
+- création ou amélioration de `docs/architecture.md` ;
+- création ou amélioration de `docs/securite.md` ;
+- ajout d’un ADR sur le mode lecture seule ;
+- ajout de liens depuis le `README` ;
+- amélioration de la documentation de reproductibilité Fedora 44.
+
+### Ce que j’ai appris
+
+- un projet sérieux ne contient pas seulement du code ;
+- la documentation d’architecture aide à expliquer les choix techniques ;
+- un ADR permet de justifier une décision ;
+- le mode lecture seule est important pour limiter les risques ;
+- GitHub peut afficher une version différente de ma version locale si les branches ou les commits ne sont pas alignés.
+
+### Erreur rencontrée
+
+J’ai constaté une différence entre le `Makefile` local et le `Makefile` affiché sur GitHub.
+
+Localement, la commande utilisait :
+
+```bash
+./scripts/bootstrap_fedora44_vm.sh
+````
+
+Mais GitHub affichait encore :
+
+```bash
+./scripts/bootstrap_fedora44_vm.sh
+```
+
+### Correction
+
+J’ai appris à vérifier :
+
+* la branche locale ;
+* la branche distante ;
+* les commits de merge ;
+* l’usage de `git pull --ff-only` ;
+* l’usage de `git push origin master`.
+
+### Prochaine étape
+
+Préparer l’ajout des tests automatisés avec `pytest`, puis la CI GitHub Actions.
+
+## Semaine 3 — Makefile et commandes de contrôle
+
+### Objectif
+
+Améliorer le Makefile pour piloter le projet avec des commandes simples et reproductibles.
+
+### Travail réalisé
+
+- ajout ou amélioration de `make help` ;
+- ajout de `make check` ;
+- vérification de `make build` ;
+- vérification de `make up` ;
+- vérification de `make health` ;
+- vérification de `make version` ;
+- vérification de `make diag` ;
+- ajout ou vérification de `make logs` ;
+- ajout d’un nettoyage léger avec `make clean`.
+
+### Ce que j’ai appris
+
+- un Makefile sert d’interface simple pour un projet ;
+- `make -n` permet de voir une commande sans l’exécuter ;
+- les lignes de commandes dans un Makefile doivent commencer par une tabulation ;
+- Docker Compose peut être contrôlé proprement depuis `make` ;
+- les logs sont essentiels pour diagnostiquer une application.
+
+### Difficultés rencontrées
+
+- cohérence entre le Makefile et les fichiers réellement présents ;
+- distinction entre commandes de diagnostic et commandes destructives ;
+- importance de ne pas créer de commande `clean` trop dangereuse.
+
+### Prochaine étape
+
+Préparer les tests automatisés et la future CI GitHub Actions.
