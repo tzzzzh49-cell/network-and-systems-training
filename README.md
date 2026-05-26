@@ -10,14 +10,30 @@ L’objectif est de construire progressivement un lab capable de :
 - être déployé plus tard sur un VPS ;
 - intégrer progressivement les API OpenAI et OpenClaw de manière sécurisée.
 
-## Statut actuel
+## Statut du projet
 
-- Reproduction testée sur une VM Fedora 44
-- API FastAPI fonctionnelle
-- Docker Compose fonctionnel
-- Makefile en cours de stabilisation
-- Documentation en cours
-- Tests automatisés prévus au deuxième mois
+Version actuelle : v0.1.0
+
+Le projet est actuellement une base de lab systèmes/réseaux/DevOps/cybersécurité.
+
+Fonctionnalités disponibles :
+- API FastAPI minimale ;
+- endpoints `/health`, `/version` et `/diag` ;
+- lancement avec Docker Compose ;
+- commandes Makefile principales ;
+- reproduction testée sur VM Fedora 44 ;
+- documentation technique initiale ;
+- règles de sécurité en lecture seule.
+
+Fonctionnalités prévues :
+- tests automatisés avec pytest ;
+- lint Python avec ruff ;
+- vérification ShellCheck ;
+- CI GitHub Actions ;
+- diagnostic réseau plus avancé ;
+- déploiement VPS ;
+- intégration progressive OpenAI API ;
+- intégration contrôlée OpenClaw.
 
 ## Sécurité
 
