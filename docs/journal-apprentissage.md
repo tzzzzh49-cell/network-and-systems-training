@@ -1,799 +1,270 @@
 # Journal d’apprentissage
 
-## Objectif du journal
+## Rôle du journal
 
-Ce journal sert à suivre ma progression dans le projet `voice-controlled-network-lab`.
+Ce document suit ma progression dans le projet `network-and-systems-training`.
 
-Le but n’est pas seulement de noter des commandes. Le but est de prouver que je comprends ce que je fais, étape par étape.
+Le but n’est pas de remplir des cases, mais de garder une trace claire de ce que j’ai réellement appris, testé, corrigé et compris.
 
-Je veux utiliser ce journal pour garder une trace claire de :
+Chaque entrée doit idéalement contenir :
 
-- ce que j’ai appris ;
-- ce que j’ai testé ;
-- les erreurs rencontrées ;
-- les solutions trouvées ;
-- les commandes importantes ;
-- les fichiers créés ;
-- les prochaines étapes.
-
-Ce document doit m’aider à construire un vrai portfolio technique, pas seulement un dossier rempli de fichiers.
+- un objectif ;
+- une action réalisée ;
+- une preuve concrète ;
+- une difficulté ou une correction ;
+- une prochaine étape.
 
 ---
 
-## Objectif global du projet
-
-Le projet consiste à construire progressivement un lab DevOps et Network Automation.
-
-L’idée finale est de pouvoir déclencher des actions simples et contrôlées, comme un diagnostic, depuis un smartphone ou une interface ChatOps.
-
-Exemple d’objectif final :
-
-Depuis mon téléphone, je demande :
-
-“Diagnostic lab”
-
-Puis le système lance une action autorisée, produit un rapport Markdown et me répond avec un résumé clair.
-
-Au début, tout doit rester simple et sécurisé. Les premières actions doivent seulement lire l’état du système, vérifier les services, générer des rapports et m’aider à comprendre.
-
----
-
-## Ma méthode de travail
-
-Ma méthode est la suivante :
+## Méthode de travail
 
 Comprendre → tester → documenter → automatiser → vérifier → améliorer
 
-Avant d’automatiser une commande, je dois d’abord être capable de l’exécuter manuellement.
+Règles personnelles :
 
-Avant de demander à Codex ou OpenClaw de faire une action, je dois comprendre ce que cette action fait.
-
-Avant de modifier quelque chose, je dois avoir une façon de vérifier si le résultat est correct.
-
----
-
-## Règles personnelles
-
-Je respecte ces règles pendant tout le projet :
-
-- je n’avance pas trop vite ;
-- je documente ce que je comprends ;
+- je documente ce que je comprends réellement ;
 - je note les erreurs au lieu de les cacher ;
 - je privilégie les petites étapes vérifiables ;
-- je ne copie pas une commande sans chercher à la comprendre ;
-- je garde une trace des commandes importantes ;
-- je fais des commits Git propres ;
-- je préfère un projet simple mais clair à un projet compliqué que je ne maîtrise pas.
+- je ne donne pas de pouvoir dangereux à l’automatisation ;
+- je garde des preuves : commandes, scripts, rapports, commits, fichiers.
 
 ---
 
-## Compétences que je veux développer
+## Vue d’ensemble des jalons
 
-Avec ce projet, je veux progresser sur :
-
-- Linux ;
-- SSH ;
-- Git ;
-- Bash ;
-- Python ;
-- Docker ;
-- Docker Compose ;
-- Ansible ;
-- API HTTP ;
-- diagnostic système ;
-- diagnostic réseau ;
-- automatisation ;
-- sécurité ;
-- documentation technique ;
-- utilisation encadrée de Codex ;
-- préparation à OpenClaw ;
-- logique DevOps ;
-- bases du Network Automation.
+| Jalon | Sujet | Statut | Preuve |
+|---|---|---|---|
+| 1 | Création du dépôt | Fait | `README.md`, `AGENTS.md`, `docs/` |
+| 2 | Diagnostic local | Fait | `scripts/diagnostic_local.sh` |
+| 3 | Mini API FastAPI | Fait | Endpoints `/health`, `/version`, `/diag` |
+| 4 | Docker Compose | Fait | `Dockerfile`, `compose.yaml` |
+| 5 | Reproductibilité Fedora 44 | Fait | `docs/reproductibilite-fedora-44-vm.md` |
+| 6 | Makefile | En cours | `make check`, `make build`, `make health` |
+| 7 | Tests automatisés | Prévu | `pytest` |
+| 8 | CI GitHub Actions | Prévu | Workflow CI |
+| 9 | VPS | Prévu | Déploiement contrôlé |
+| 10 | OpenAI API / OpenClaw | Prévu | Résumé de rapports en lecture seule |
 
 ---
 
-## Semaine 1 — Création du projet
+# Journal chronologique
+
+## Étape 1 — Création et intention du projet
 
 ### Objectif
 
-Mettre en place la base du dépôt et commencer la documentation.
-
-### Tâches prévues
-
-- créer le dossier du projet ;
-- initialiser Git ;
-- créer le fichier README.md ;
-- créer le fichier AGENTS.md ;
-- créer le dossier docs ;
-- créer le fichier docs/securite.md ;
-- créer le fichier docs/journal-apprentissage.md ;
-- créer le fichier docs/linux-ssh.md ;
-- faire un premier commit propre.
-
-### Ce que je veux comprendre
-
-À la fin de cette semaine, je veux comprendre :
-
-- pourquoi un dépôt Git est important ;
-- pourquoi il faut documenter dès le début ;
-- à quoi sert un README ;
-- à quoi sert un fichier AGENTS.md ;
-- pourquoi la sécurité doit être pensée avant l’automatisation.
-
-### Notes personnelles
-
-Date :
-
-Temps passé :
-
-Ce que j’ai fait :
-
-Ce que j’ai compris :
-
-Ce qui reste flou :
-
-Prochaine action :
-
----
-
-## Semaine 2 — Premiers diagnostics locaux
-
-### Objectif
-
-Créer un premier diagnostic local simple.
-
-Le but est d’apprendre à observer l’état d’une machine Linux avant de chercher à l’automatiser.
-
-### Tâches prévues
-
-- étudier les commandes Linux de diagnostic ;
-- observer le système ;
-- observer le réseau ;
-- observer les ports ouverts ;
-- créer un premier script de diagnostic ;
-- produire un rapport Markdown dans le dossier outputs/reports.
-
-### Commandes à étudier
-
-hostnamectl
-
-uname -a
-
-ip a
-
-ip route
-
-ss -tulpn
-
-df -h
-
-free -h
-
-systemctl --failed
-
-journalctl -n 100
-
-### Ce que je veux comprendre
-
-À la fin de cette étape, je veux être capable d’expliquer :
-
-- ce qu’est une interface réseau ;
-- ce qu’est une route ;
-- ce qu’est un port ouvert ;
-- ce qu’est un service Linux ;
-- ce qu’est un rapport de diagnostic ;
-- pourquoi il est important d’avoir une baseline.
-
-### Notes personnelles
-
-Date :
-
-Temps passé :
-
-Ce que j’ai testé :
-
-Résultat obtenu :
-
-Erreur rencontrée :
-
-Solution trouvée :
-
-Prochaine action :
-
----
-
-## Semaine 3 — Mini API locale
-
-### Objectif
-
-Créer une petite API locale pour avoir une application simple à diagnostiquer et à conteneuriser.
-
-Cette API servira de support pour apprendre Docker, les tests, les rapports et plus tard l’automatisation.
-
-### Endpoints prévus
-
-GET /health
-
-GET /version
-
-GET /diag
-
-### Ce que je veux comprendre
-
-À la fin de cette étape, je veux comprendre :
-
-- ce qu’est une API ;
-- ce qu’est un endpoint ;
-- ce qu’est un service local ;
-- ce que signifie lancer une application avec uvicorn ;
-- comment tester une API avec curl ;
-- pourquoi un endpoint /health est utile.
-
-### Notes personnelles
-
-Date :
-
-Temps passé :
-
-Fichiers créés :
-
-Commandes utilisées :
-
-Ce qui fonctionne :
-
-Ce qui ne fonctionne pas encore :
-
-Prochaine action :
-
----
-
-## Semaine 4 — Docker et Docker Compose
-
-### Objectif
-
-Mettre la mini API dans un conteneur Docker.
-
-Le but est de comprendre comment une application peut être emballée avec ses dépendances pour être lancée de manière plus reproductible.
-
-### Fichiers prévus
-
-app/Dockerfile
-
-compose.yaml
-
-### Commandes à étudier
-
-docker compose config
-
-docker compose up --build -d
-
-docker compose ps
-
-docker compose logs --tail=50
-
-docker compose down
-
-### Ce que je veux comprendre
-
-À la fin de cette étape, je veux expliquer simplement :
-
-- ce qu’est une image Docker ;
-- ce qu’est un conteneur ;
-- ce qu’est un Dockerfile ;
-- ce que fait Docker Compose ;
-- comment voir les logs d’un conteneur ;
-- comment vérifier qu’une API répond depuis un conteneur.
-
-### Notes personnelles
-
-Date :
-
-Temps passé :
-
-Ce que j’ai construit :
-
-Erreur rencontrée :
-
-Solution :
-
-Prochaine amélioration :
-
----
-
-## Semaine 5 — Ansible local
-
-### Objectif
-
-Découvrir Ansible en local avant de l’utiliser sur des machines distantes ou des équipements réseau.
-
-Le but est de comprendre la logique d’un inventaire, d’un playbook et d’une exécution répétable.
-
-### Fichiers prévus
-
-ansible/inventory.yml
-
-ansible/playbooks/diagnostic.yml
-
-### Commandes à étudier
-
-ansible localhost -i ansible/inventory.yml -m ping
-
-ansible-playbook -i ansible/inventory.yml ansible/playbooks/diagnostic.yml
-
-ansible-playbook -i ansible/inventory.yml ansible/playbooks/diagnostic.yml --check
-
-### Ce que je veux comprendre
-
-À la fin de cette étape, je veux comprendre :
-
-- ce qu’est un inventaire Ansible ;
-- ce qu’est un playbook ;
-- ce qu’est une tâche ;
-- ce qu’est un module ;
-- ce que signifie idempotence ;
-- à quoi sert le mode --check ;
-- la différence entre un script Bash et un playbook Ansible.
-
-### Notes personnelles
-
-Date :
-
-Temps passé :
-
-Commande testée :
-
-Résultat :
-
-Ce que j’ai compris :
-
-Ce qui reste à revoir :
-
----
-
-## Semaine 6 — Runbooks et préparation OpenClaw
-
-### Objectif
-
-Préparer les futures commandes ChatOps sans encore donner trop de pouvoir à l’automatisation.
-
-Un runbook doit transformer une phrase simple en procédure claire.
-
-Exemple :
-
-Commande utilisateur :
-
-diagnostic lab
-
-Action réelle :
-
-lancer un script de diagnostic ou un playbook de validation
-
-Réponse attendue :
-
-un résumé court et le chemin du rapport généré
-
-### Fichiers prévus
-
-openclaw/runbooks/diagnostic-lab.md
-
-openclaw/allowlists/read-only.md
-
-### Ce que je veux comprendre
-
-À la fin de cette étape, je veux comprendre :
-
-- ce qu’est un runbook ;
-- ce qu’est une allowlist ;
-- pourquoi il faut refuser par défaut ;
-- pourquoi la voix ne doit pas modifier directement le réseau ;
-- pourquoi il faut séparer lecture, préparation et exécution.
-
-### Notes personnelles
-
-Date :
-
-Temps passé :
-
-Runbook créé :
-
-Commande autorisée :
-
-Commande interdite :
-
-Ce que j’ai compris :
-
----
-
-## Fiche quotidienne
-
-### Date
-
-À compléter.
-
-### Temps passé
-
-À compléter.
-
-### Sujet travaillé
-
-À compléter.
-
-### Ce que j’ai fait
-
-- 
-- 
-- 
+Créer un dépôt clair pour apprendre Linux, réseau, Docker, FastAPI, automatisation et cybersécurité défensive.
 
 ### Ce que j’ai compris
 
-- 
-- 
-- 
+Un dépôt Git n’est pas seulement un endroit où stocker du code.  
+C’est aussi une preuve de progression, de méthode et de rigueur.
 
-### Ce que je n’ai pas encore compris
+La documentation doit commencer tôt, car elle explique pourquoi les choix techniques sont faits.
 
-- 
-- 
-- 
+### Preuves
 
-### Erreur ou blocage rencontré
+- `README.md`
+- `AGENTS.md`
+- `docs/securite.md`
+- `docs/journal-apprentissage.md`
 
-À compléter.
+### Prochaine étape
 
-### Hypothèse
-
-Je pense que le problème vient de :
-
-À compléter.
-
-### Solution testée
-
-À compléter.
-
-### Résultat
-
-À compléter.
-
-### Prochaine action
-
-À compléter.
+Rendre le projet reproductible depuis une machine propre.
 
 ---
 
-## Bilan hebdomadaire
+## Étape 2 — Diagnostic local en lecture seule
 
-### Semaine concernée
+### Objectif
 
-À compléter.
+Créer un premier diagnostic local pour observer l’état d’une machine Linux sans rien modifier.
 
-### Ce que j’ai appris
+### Travail réalisé
 
-- 
-- 
-- 
+Création du script :
 
-### Ce que je sais mieux expliquer maintenant
+```bash
+scripts/diagnostic_local.sh
+```
 
-- 
-- 
-- 
+Le script produit un rapport Markdown dans :
 
-### Les commandes importantes de la semaine
+```text
+outputs/reports/
+```
 
-À compléter.
+Il collecte notamment :
 
-### Les fichiers créés ou modifiés
+- la date du diagnostic ;
+- le nom de la machine ;
+- la version du système ;
+- les interfaces réseau ;
+- les routes réseau ;
+- les ports ouverts ;
+- l’espace disque ;
+- la mémoire ;
+- les conteneurs Docker ;
+- le test de l’endpoint `/health`.
 
-- 
-- 
-- 
+### Ce que j’ai compris
 
-### Les erreurs rencontrées
+Un diagnostic est une photographie de l’état du système à un moment donné.
 
-- 
-- 
-- 
+Ce type de rapport peut servir de preuve avant ou après une modification.
 
-### Les solutions trouvées
+Le script doit rester en lecture seule pour éviter les actions dangereuses.
 
-- 
-- 
-- 
+### Prochaine étape
 
-### Ce qui reste flou
-
-- 
-- 
-- 
-
-### Objectif de la semaine suivante
-
-À compléter.
+Relier le diagnostic à l’API locale et au Makefile.
 
 ---
 
-## Suivi des commits Git importants
+## Étape 3 — Mini API FastAPI
 
-### Commit 1
+### Objectif
 
-Date :
+Créer une API locale simple qui servira de support pour Docker, les tests, les diagnostics et l’automatisation.
 
-Message du commit :
+### Travail réalisé
 
-Ce que ce commit ajoute :
+Création d’une API FastAPI avec trois routes principales :
 
-Pourquoi il est important :
+- `/health`
+- `/version`
+- `/diag`
 
----
+L’API a été lancée avec Uvicorn puis testée avec `curl`.
 
-### Commit 2
-
-Date :
-
-Message du commit :
-
-Ce que ce commit ajoute :
-
-Pourquoi il est important :
-
----
-
-## Suivi des notions apprises
-
-### Linux
-
-Notions comprises :
-
-Notions à revoir :
-
-### SSH
-
-Notions comprises :
-
-Notions à revoir :
-
-### Git
-
-Notions comprises :
-
-Notions à revoir :
-
-### Bash
-
-Notions comprises :
-
-Notions à revoir :
-
-### Python
-
-Notions comprises :
-
-Notions à revoir :
-
-### Docker
-
-Notions comprises :
-
-Notions à revoir :
-
-### Ansible
-
-Notions comprises :
-
-Notions à revoir :
-
-### OpenClaw
-
-Notions comprises :
-
-Notions à revoir :
-
-### Codex CLI
-
-Notions comprises :
-
-Notions à revoir :
-
----
-
-## Objectif portfolio
-
-Chaque semaine, je dois essayer de produire au moins une preuve concrète :
-
-- un fichier Markdown ;
-- un script ;
-- un rapport ;
-- une configuration ;
-- un commit Git ;
-- une explication claire ;
-- une erreur corrigée ;
-- une commande comprise.
-
-Le but final est que mon dépôt montre ma progression.
-
-Une personne extérieure doit pouvoir lire le projet et comprendre :
-
-- ce que je construis ;
-- pourquoi je le construis ;
-- comment je le sécurise ;
-- ce que j’ai appris ;
-- comment je progresse vers le DevOps et le Network Automation.
-
-## Étape 3 — Mini API locale
-
-J’ai créé une mini API Python avec FastAPI.
-
-Elle contient trois routes principales :
-
-- /health : vérifie que le service fonctionne ;
-- /version : affiche la version de l’application ;
-- /diag : affiche des informations simples sur la machine et Python.
-
-J’ai lancé l’API avec Uvicorn et je l’ai testée avec curl.
-
-Ce que j’ai compris :
+### Ce que j’ai compris
 
 Une API est un service qui répond à des requêtes HTTP.
 
 Uvicorn sert à lancer l’application FastAPI.
 
-L’endpoint /health est utile pour les diagnostics, Docker, les scripts de vérification et plus tard l’automatisation.
+L’endpoint `/health` est utile pour vérifier rapidement que le service fonctionne.
 
-## Étape 4 — Script de diagnostic local
+### Preuve
 
-J’ai créé un script Bash nommé `scripts/diagnostic_local.sh`.
+```bash
+curl http://localhost:8000/health
+```
 
-Son rôle est de produire un rapport Markdown dans `outputs/reports/`.
+### Prochaine étape
 
-Le script collecte plusieurs informations :
+Lancer cette API dans Docker.
 
-- date du diagnostic ;
-- nom de la machine ;
-- version du système ;
-- interfaces réseau ;
-- routes réseau ;
-- ports ouverts ;
-- espace disque ;
-- mémoire ;
-- conteneurs Docker ;
-- test de l’endpoint `/health`.
+---
 
-Ce que j’ai compris :
+## Étape 4 — Docker Compose
 
-Un script de diagnostic sert à créer une photographie de l’état du système à un moment donné.
+### Objectif
 
-Ce rapport pourra servir de preuve avant ou après un changement.
+Lancer la mini API FastAPI dans un conteneur Docker avec Docker Compose.
 
-Ce script ne modifie rien sur la machine. Il observe seulement.
-
-## Blocage Docker sur Fedora
-
-L’API fonctionne localement avec Uvicorn.
-
-Le fichier compose.yaml est valide avec `docker compose config`.
-
-Le lancement avec Docker est bloqué par un problème de droits sur `/var/run/docker.sock` et par le fait que le plugin Compose est installé dans le dossier utilisateur.
-
-Conclusion : le problème vient de l’environnement Fedora/Docker, pas du code de l’application.
-
-Prochaine action : continuer l’apprentissage avec l’API locale, puis revenir sur Docker après avoir clarifié l’installation système.
-
-## Étape Docker Compose
-
-J’ai réussi à lancer ma mini API FastAPI dans un conteneur Docker avec Docker Compose.
+### Travail réalisé
 
 Commande utilisée :
 
+```bash
 docker compose up --build -d
+```
 
-Ce que j’ai compris :
+### Ce que j’ai compris
 
-- Dockerfile décrit comment construire l’image de l’application.
-- compose.yaml décrit comment lancer le service.
-- docker compose config vérifie la configuration.
-- docker compose up --build -d construit et lance le conteneur.
-- docker compose ps vérifie si le conteneur tourne.
-- docker compose logs permet de lire les logs.
-- curl /health permet de vérifier que l’API répond.
+- un `Dockerfile` décrit comment construire l’image ;
+- `compose.yaml` décrit comment lancer le service ;
+- `docker compose config` vérifie la configuration ;
+- `docker compose ps` vérifie si le conteneur tourne ;
+- `docker compose logs` permet de comprendre ce qui se passe ;
+- `curl /health` permet de vérifier que l’API répond.
 
-Problème rencontré :
+### Blocage rencontré
 
-Docker Compose n’était pas immédiatement disponible sur ma machine Fedora.
-Il a fallu corriger l’installation du plugin Compose et les droits d’accès Docker.
+Docker Compose n’était pas immédiatement disponible sur Fedora.
 
-Conclusion :
+Il a fallu corriger l’installation du plugin Compose et les droits Docker.
 
-Le problème ne venait pas du code de l’application mais de l’environnement Docker local.
+### Conclusion
 
- ## Semaine 1 — Stabilisation du dépôt
+Le problème venait de l’environnement Docker local, pas du code de l’application.
+
+### Prochaine étape
+
+Stabiliser les commandes avec un Makefile.
+
+---
+
+## Étape 5 — Stabilisation du dépôt
 
 ### Objectif
 
 Rendre le projet plus cohérent, reproductible et compréhensible.
 
-### Ce que j’ai fait
+### Travail réalisé
 
-- vérification de la structure du dépôt
-- création d’une branche dédiée
-- harmonisation entre README, Makefile et scripts
-- amélioration des commandes Makefile
-- test de reproduction depuis zéro
-- mise à jour de la documentation
+- vérification de la structure du dépôt ;
+- création d’une branche dédiée ;
+- harmonisation entre README, Makefile et scripts ;
+- amélioration des commandes Makefile ;
+- test de reproduction depuis zéro ;
+- mise à jour de la documentation.
 
 ### Ce que j’ai appris
 
-- l’importance de la cohérence entre documentation et code
-- l’intérêt d’un Makefile pour simplifier l’utilisation du projet
-- pourquoi tester depuis un clone propre
-- comment documenter une reproduction réussie
+Un projet sérieux doit être vérifiable depuis un clone propre.
+
+Le Makefile simplifie l’utilisation du projet et évite de devoir mémoriser toutes les commandes.
+
+La documentation doit correspondre aux fichiers réellement présents.
 
 ### Difficultés rencontrées
 
-- incohérence entre un nom de script et la commande documentée
-- nécessité de vérifier chaque commande réellement
-- distinction entre “ça marche dans mon dossier” et “ça marche depuis zéro”
+- incohérence entre un nom de script et une commande documentée ;
+- nécessité de tester chaque commande réellement ;
+- différence entre “ça marche chez moi” et “ça marche depuis zéro”.
 
 ### Prochaine étape
 
-Améliorer la documentation technique et préparer les tests automatisés.
+Préparer les tests automatisés.
 
-## Semaine 2 — Documentation technique et sécurité
+---
+
+## Étape 6 — Documentation technique et sécurité
 
 ### Objectif
 
-Structurer la documentation du projet afin de mieux expliquer l’architecture, la sécurité et les décisions techniques.
+Structurer la documentation pour expliquer l’architecture, la sécurité et les décisions techniques.
 
 ### Travail réalisé
 
-- création ou amélioration de `docs/architecture.md` ;
-- création ou amélioration de `docs/securite.md` ;
+- amélioration de `docs/architecture.md` ;
+- amélioration de `docs/securite.md` ;
 - ajout d’un ADR sur le mode lecture seule ;
-- ajout de liens depuis le `README` ;
+- ajout de liens depuis le README ;
 - amélioration de la documentation de reproductibilité Fedora 44.
 
 ### Ce que j’ai appris
 
-- un projet sérieux ne contient pas seulement du code ;
-- la documentation d’architecture aide à expliquer les choix techniques ;
-- un ADR permet de justifier une décision ;
-- le mode lecture seule est important pour limiter les risques ;
-- GitHub peut afficher une version différente de ma version locale si les branches ou les commits ne sont pas alignés.
+Un projet sérieux ne contient pas seulement du code.
 
-### Erreur rencontrée
+Un ADR permet de justifier une décision technique.
 
-J’ai constaté une différence entre le `Makefile` local et le `Makefile` affiché sur GitHub.
-
-Localement, la commande utilisait :
-
-```bash
-./scripts/bootstrap_fedora44_vm.sh
-````
-
-Mais GitHub affichait encore :
-
-```bash
-./scripts/bootstrap_fedora44_vm.sh
-```
-
-### Correction
-
-J’ai appris à vérifier :
-
-* la branche locale ;
-* la branche distante ;
-* les commits de merge ;
-* l’usage de `git pull --ff-only` ;
-* l’usage de `git push origin master`.
+Le mode lecture seule est important pour limiter les risques avant toute automatisation.
 
 ### Prochaine étape
 
-Préparer l’ajout des tests automatisés avec `pytest`, puis la CI GitHub Actions.
+Ajouter des tests automatisés avec pytest.
 
-## Semaine 3 — Makefile et commandes de contrôle
+---
+
+## Étape 7 — Makefile et commandes de contrôle
 
 ### Objectif
 
-Améliorer le Makefile pour piloter le projet avec des commandes simples et reproductibles.
+Piloter le projet avec des commandes simples et reproductibles.
 
 ### Travail réalisé
 
@@ -807,20 +278,41 @@ Améliorer le Makefile pour piloter le projet avec des commandes simples et repr
 - ajout ou vérification de `make logs` ;
 - ajout d’un nettoyage léger avec `make clean`.
 
-### Ce que j’ai appris
+### Ce que j’ai compris
 
-- un Makefile sert d’interface simple pour un projet ;
-- `make -n` permet de voir une commande sans l’exécuter ;
-- les lignes de commandes dans un Makefile doivent commencer par une tabulation ;
-- Docker Compose peut être contrôlé proprement depuis `make` ;
-- les logs sont essentiels pour diagnostiquer une application.
+Un Makefile peut servir d’interface simple pour tout le projet.
 
-### Difficultés rencontrées
+`make -n` permet de voir une commande sans l’exécuter.
 
-- cohérence entre le Makefile et les fichiers réellement présents ;
-- distinction entre commandes de diagnostic et commandes destructives ;
-- importance de ne pas créer de commande `clean` trop dangereuse.
+Les logs sont essentiels pour diagnostiquer une application.
+
+Une commande `clean` ne doit pas être dangereuse.
 
 ### Prochaine étape
 
-Préparer les tests automatisés et la future CI GitHub Actions.
+Créer les premiers tests automatisés et préparer la CI GitHub Actions.
+
+---
+
+# Compétences suivies
+
+| Domaine | Niveau actuel | À consolider |
+|---|---|---|
+| Linux | Bases utiles pour diagnostic | Services, logs, permissions |
+| Git | Commits, branches, push/pull | Historique propre, PR |
+| Bash | Script de diagnostic | Robustesse, erreurs |
+| FastAPI | API minimale | Tests, structure propre |
+| Docker | Build et Compose | Volumes, réseau Docker |
+| Sécurité | Lecture seule, prudence | Secrets, hardening |
+| Documentation | README, docs, journal | Architecture plus visuelle |
+| Automatisation | Makefile | CI, Ansible |
+
+---
+
+# Prochaines priorités
+
+- Ajouter des tests pytest.
+- Ajouter une CI GitHub Actions.
+- Nettoyer le README si nécessaire.
+- Préparer une documentation VPS séparée.
+- Garder OpenAI API et OpenClaw en lecture seule au départ.
