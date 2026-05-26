@@ -52,6 +52,7 @@ make health
 make version
 make diag
 make down
+```
 
 ## Commandes principales
 
