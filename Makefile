@@ -1,7 +1,7 @@
 .PHONY: bootstrap check build up down logs test ansible-check diagnostic clean
 
 bootstrap:
-	./scripts/bootstrap_fedora_vm.sh
+	./scripts/bootstrap_fedora44_vm.sh
 
 check:
 	./scripts/check_reproducibility.sh
