@@ -1,34 +1,38 @@
- # Network and Systems Training
+# Network and Systems Training
 
-Projet d’apprentissage autour de Linux, des réseaux, de Docker, de FastAPI, de l’automatisation et de la cybersécurité défensive.
+Projet d'apprentissage Linux/réseau/Docker/FastAPI orienté reproductibilité sur VM.
 
-L’objectif est de construire progressivement un lab capable de :
+## Compatibilité Linux
 
-- exposer une API FastAPI minimale ;
-- lancer des diagnostics système et réseau en lecture seule ;
-- produire des rapports techniques ;
-- être déployé plus tard sur un VPS ;
-- intégrer progressivement les API OpenAI et OpenClaw de manière sécurisée.
+| Distribution | Version cible | Statut |
+|---|---|---|
+| Fedora Workstation VM | 44 | Validée / à revalider à chaque évolution majeure |
+| Ubuntu LTS | 24.04.4 | Validée / à revalider à chaque évolution majeure |
 
-## Statut actuel
+> Le projet **ne prétend pas** fonctionner sur toutes les distributions Linux.
 
-- Reproduction testée sur une VM Fedora 44
-- API FastAPI fonctionnelle
-- Docker Compose fonctionnel
-- Makefile en cours de stabilisation
-- Documentation en cours
-- Tests automatisés prévus au deuxième mois
+## Prérequis
+- `git`
+- `curl`
+- `make`
+- `docker` + `docker compose`
+- `python3`
+- `ansible`
 
-## Sécurité
+## Bootstrap par distribution
+- Fedora 44 : `make bootstrap-fedora`
+- Ubuntu 24.04.4 : `make bootstrap-ubuntu`
 
-Le projet démarre volontairement en mode lecture seule.  
-Aucune commande destructive ne doit être automatisée à ce stade.
+Documentation détaillée :
+- `docs/reproductibilite-fedora-44-vm.md`
+- `docs/reproductibilite-ubuntu-24.04.md`
+- `docs/reproductibilite-linux-generique.md`
 
-## Démarrage rapide
-
+## Workflow reproductible
 ```bash
 git clone <url-du-repo>
 cd network-and-systems-training
+make check
 make build
 make up
 make health
@@ -37,15 +41,7 @@ make diag
 make down
 ```
 
-## Commandes disponibles
-
-| Commande | Description |
-|---|---|
-| `make help` | Affiche les commandes disponibles |
-| `make build` | Construit l’image Docker |
-| `make up` | Lance l’application |
-| `make health` | Vérifie `/health` |
-| `make version` | Vérifie `/version` |
-| `make diag` | Vérifie `/diag` |
-| `make logs` | Affiche les logs Docker |
-| `make down` | Arrête l’application |
+## Endpoints
+- `GET /health`
+- `GET /version`
+- `GET /diag`

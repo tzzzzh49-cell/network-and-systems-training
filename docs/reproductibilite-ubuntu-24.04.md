@@ -1,12 +1,12 @@
-# Reproductibilité sur Fedora 44 Workstation VM
+# Reproductibilité sur Ubuntu 24.04.4 LTS
 
 ## Portée
-Ce guide couvre uniquement **Fedora 44 Workstation (VM)**.
+Ce guide couvre uniquement **Ubuntu 24.04.4 LTS**.
 
 ## Prérequis
-- VM Fedora 44 Workstation à jour.
+- VM ou machine Ubuntu 24.04.4 LTS.
 - Utilisateur avec droits `sudo`.
-- Accès réseau sortant (pull d'images Docker et paquets DNF).
+- Accès réseau sortant (APT + Docker Hub).
 
 ## 1) Cloner le dépôt
 ```bash
@@ -14,12 +14,10 @@ git clone <URL_DU_DEPOT>
 cd network-and-systems-training
 ```
 
-## 2) Installer les dépendances Fedora
+## 2) Installer les dépendances Ubuntu
 ```bash
-make bootstrap-fedora
+make bootstrap-ubuntu
 ```
-
-> Le script `scripts/bootstrap_fedora44_vm.sh` est conservé tel que base d'installation Fedora.
 
 ## 3) Vérifier l'environnement
 ```bash
