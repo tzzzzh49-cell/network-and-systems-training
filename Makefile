@@ -1,46 +1,68 @@
-.PHONY: help check bootstrap build up down logs health version diag diagnostic clean
+.PHONY: help check check-fast check-full bootstrap bootstrap-fedora bootstrap-ubuntu build up down logs health version diag diagnostic diagnostic-local ansible-check shellcheck compose-config run test clean
 
 APP_URL ?= http://127.0.0.1:8000
-COMPOSE ?= docker compose
+COMPOSE ?= ./scripts/compose.sh
 CURL ?= curl -fsS
 
 help:
 	@echo "Commandes disponibles :"
 	@echo ""
-	@echo "  make help        Affiche cette aide"
-	@echo "  make check       Vérifie les prérequis locaux"
-	@echo "  make bootstrap   Prépare l'environnement Fedora 44"
-	@echo "  make build       Construit l'image Docker"
-	@echo "  make up          Lance l'application"
-	@echo "  make down        Arrête l'application"
-	@echo "  make logs        Affiche les logs Docker"
-	@echo "  make health      Teste l'endpoint /health"
-	@echo "  make version     Teste l'endpoint /version"
-	@echo "  make diag        Teste l'endpoint /diag"
-	@echo "  make diagnostic  Alias de make diag"
-	@echo "  make clean       Nettoyage léger"
+	@echo "  make help              Affiche cette aide"
+	@echo "  make check             Vérification rapide du dépôt"
+	@echo "  make check-fast        Alias de make check"
+	@echo "  make check-full        Vérification complète avec build Docker et Ansible"
+	@echo "  make bootstrap         Alias de make bootstrap-fedora"
+	@echo "  make bootstrap-fedora  Prépare l'environnement Fedora 44"
+	@echo "  make bootstrap-ubuntu  Prépare l'environnement Ubuntu 24.04.4 LTS"
+	@echo "  make compose-config    Valide compose.yaml"
+	@echo "  make shellcheck        Vérifie les scripts Bash"
+	@echo "  make build             Construit l'image Docker"
+	@echo "  make up                Lance l'application"
+	@echo "  make run               Build, démarre et attend /health"
+	@echo "  make down              Arrête l'application"
+	@echo "  make logs              Affiche les logs Docker"
+	@echo "  make health            Teste l'endpoint /health"
+	@echo "  make version           Teste l'endpoint /version"
+	@echo "  make diag              Teste l'endpoint /diag"
+	@echo "  make diagnostic        Alias de make diag"
+	@echo "  make diagnostic-local  Génère un rapport local read-only"
+	@echo "  make ansible-check     Lance le playbook Ansible en mode check"
+	@echo "  make test              Alias de make health"
+	@echo "  make clean             Nettoyage léger"
 	@echo ""
 	@echo "Variable utile :"
 	@echo "  APP_URL=$(APP_URL)"
 
-check:
-	@echo "Vérification des prérequis..."
-	@command -v git >/dev/null || { echo "git est manquant"; exit 1; }
-	@command -v docker >/dev/null || { echo "docker est manquant"; exit 1; }
-	@docker compose version >/dev/null || { echo "docker compose est manquant"; exit 1; }
-	@command -v curl >/dev/null || { echo "curl est manquant"; exit 1; }
-	@test -f compose.yaml || { echo "compose.yaml est manquant"; exit 1; }
-	@test -f scripts/bootstrap_fedora44_vm.sh || { echo "scripts/bootstrap_fedora44_vm.sh est manquant"; exit 1; }
-	@echo "OK : prérequis disponibles"
+check: check-fast
 
-bootstrap:
+check-fast:
+	./scripts/check_reproducibility.sh
+
+check-full:
+	./scripts/check_reproducibility.sh --full
+
+bootstrap: bootstrap-fedora
+
+bootstrap-fedora:
 	./scripts/bootstrap_fedora44_vm.sh
+
+bootstrap-ubuntu:
+	./scripts/bootstrap_ubuntu2404.sh
+
+compose-config:
+	$(COMPOSE) config >/dev/null
+
+shellcheck:
+	shellcheck scripts/*.sh
 
 build:
 	$(COMPOSE) build
 
 up:
 	$(COMPOSE) up -d
+
+run:
+	./scripts/run_lab.sh
 
 down:
 	$(COMPOSE) down
@@ -61,6 +83,14 @@ diag:
 	@echo ""
 
 diagnostic: diag
+
+diagnostic-local:
+	./scripts/diagnostic_local.sh
+
+ansible-check:
+	ansible-playbook -i ansible/inventory.yml ansible/playbooks/diagnostic.yml --check
+
+test: health
 
 clean:
 	$(COMPOSE) down

@@ -1,6 +1,6 @@
 # Roadmap
 
-## v0.1.0 — Reproduction locale stable
+## v0.1.0 - Reproduction locale stable
 
 Objectif : stabiliser la base locale du projet.
 
@@ -10,20 +10,28 @@ Inclus :
 - Makefile utilisable ;
 - documentation initiale ;
 - reproduction Fedora 44 validée ;
+- première cible Ubuntu 24.04 documentée ;
 - règles de sécurité en lecture seule.
 
-## v0.2.0 — Tests, lint et CI
+## v0.2.0 - Tests, lint et CI
 
 Objectif : rendre le projet vérifiable automatiquement.
 
-Prévu :
-- tests avec pytest ;
-- lint Python avec ruff ;
-- vérification des scripts Bash avec shellcheck ;
-- validation Docker Compose ;
-- GitHub Actions.
+Préparé :
+- `make check` pour une validation rapide ;
+- `make check-full` pour la validation complète ;
+- `make shellcheck` pour les scripts Bash ;
+- `make compose-config` pour Docker Compose ;
+- documentation du workflow Git/GitHub.
 
-## v0.3.0 — Diagnostic réseau avancé
+Prochaines étapes :
+- ajouter `pytest` et des tests unitaires pour `/health`, `/version` et `/diag` ;
+- ajouter `ruff` pour le lint Python ;
+- créer une GitHub Action qui lance `make check` sur chaque Pull Request ;
+- valider réellement le bootstrap Ubuntu dans une VM Ubuntu 24.04.4 propre ;
+- documenter le résultat de cette validation Ubuntu.
+
+## v0.3.0 - Diagnostic réseau avancé
 
 Objectif : enrichir le diagnostic système/réseau.
 
@@ -35,7 +43,7 @@ Prévu :
 - export JSON ;
 - export Markdown.
 
-## v0.4.0 — Déploiement VPS
+## v0.4.0 - Déploiement VPS
 
 Objectif : déployer le lab sur un VPS sécurisé.
 
@@ -47,17 +55,17 @@ Prévu :
 - nom de domaine ;
 - premiers backups.
 
-## v0.5.0 — Résumé IA
+## v0.5.0 - Résumé IA
 
-Objectif : intégrer progressivement l’API OpenAI.
+Objectif : intégrer progressivement l'API OpenAI.
 
 Prévu :
 - résumé de rapports ;
-- explication d’erreurs ;
+- explication d'erreurs ;
 - budget API limité ;
-- absence d’exécution automatique de commandes.
+- absence d'exécution automatique de commandes.
 
-## v0.6.0 — OpenClaw contrôlé
+## v0.6.0 - OpenClaw contrôlé
 
 Objectif : intégrer OpenClaw avec sécurité.
 
