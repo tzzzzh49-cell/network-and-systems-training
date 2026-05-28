@@ -1,4 +1,4 @@
- # Network and Systems Training
+# Network and Systems Training
 
 Projet d’apprentissage autour de Linux, des réseaux, de Docker, de FastAPI, de l’automatisation et de la cybersécurité défensive.
 
@@ -10,25 +10,42 @@ L’objectif est de construire progressivement un lab capable de :
 - être déployé plus tard sur un VPS ;
 - intégrer progressivement les API OpenAI et OpenClaw de manière sécurisée.
 
-## Statut actuel
+## Portée de reproductibilité Linux
 
-- Reproduction testée sur une VM Fedora 44
-- API FastAPI fonctionnelle
-- Docker Compose fonctionnel
-- Makefile en cours de stabilisation
-- Documentation en cours
-- Tests automatisés prévus au deuxième mois
+Ce dépôt **ne prétend pas** fonctionner sur toutes les distributions Linux.
 
-## Sécurité
+### Matrice de compatibilité Linux
 
-Le projet démarre volontairement en mode lecture seule.  
-Aucune commande destructive ne doit être automatisée à ce stade.
+| Distribution | Version cible | Statut |
+|---|---:|---|
+| Fedora Workstation (VM) | 44 | Validée |
+| Ubuntu LTS (VM) | 24.04.4 | À valider |
+
+## Pré-requis
+
+- Git
+- Accès Internet
+- Un utilisateur avec droits `sudo`
+- Docker Engine + Docker Compose plugin
+- Make
+- Curl
+- JQ
+- Python 3
+- Ansible
 
 ## Démarrage rapide
 
 ```bash
 git clone <url-du-repo>
 cd network-and-systems-training
+
+# Choisir selon la distribution
+make bootstrap-fedora
+# ou
+make bootstrap-ubuntu
+
+# Vérifications et exécution
+make check
 make build
 make up
 make health
@@ -42,6 +59,9 @@ make down
 | Commande | Description |
 |---|---|
 | `make help` | Affiche les commandes disponibles |
+| `make bootstrap-fedora` | Installe les prérequis Fedora 44 VM |
+| `make bootstrap-ubuntu` | Installe les prérequis Ubuntu 24.04.4 |
+| `make check` | Vérifie les prérequis et la configuration |
 | `make build` | Construit l’image Docker |
 | `make up` | Lance l’application |
 | `make health` | Vérifie `/health` |
@@ -49,3 +69,14 @@ make down
 | `make diag` | Vérifie `/diag` |
 | `make logs` | Affiche les logs Docker |
 | `make down` | Arrête l’application |
+
+## Guides de reproductibilité
+
+- [Fedora 44 Workstation VM](docs/reproductibilite-fedora-44-vm.md)
+- [Ubuntu 24.04.4 LTS](docs/reproductibilite-ubuntu-24.04.md)
+- [Linux générique (portée)](docs/reproductibilite-linux-generique.md)
+
+## Sécurité
+
+Le projet démarre volontairement en mode lecture seule.
+Aucune commande destructive ne doit être automatisée à ce stade.

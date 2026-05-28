@@ -1,10 +1,10 @@
-# Reproductibilité — Fedora 44 Workstation VM
+# Reproductibilité — Ubuntu 24.04.4 LTS
 
-Ce guide décrit un chemin reproductible pour lancer ce projet sur **Fedora 44 Workstation**.
+Ce guide décrit un chemin reproductible pour lancer ce projet sur **Ubuntu 24.04.4 LTS**.
 
-## Pré-requis validés
+## Pré-requis à valider
 
-- VM Fedora 44 Workstation à jour
+- VM Ubuntu 24.04.4 LTS
 - Utilisateur avec droits `sudo`
 - Accès Internet
 - `git`
@@ -16,12 +16,12 @@ git clone <URL_DU_DEPOT>
 cd network-and-systems-training
 ```
 
-## 2) Installer les dépendances Fedora
+## 2) Installer les dépendances Ubuntu
 
-Le script Fedora existant est conservé :
+Un script dédié Ubuntu est fourni :
 
 ```bash
-make bootstrap-fedora
+make bootstrap-ubuntu
 ```
 
 Ce script installe notamment Docker Engine, Docker Compose plugin, Python, Ansible et outils CLI.
@@ -57,5 +57,5 @@ make down
 
 ## Notes de sécurité
 
-- Les scripts fournis évitent les commandes destructrices (pas de suppression de volumes/projets utilisateur).
+- Les scripts fournis évitent les commandes destructrices (pas de purge globale, pas de suppression de volumes).
 - Les suppressions éventuelles concernent uniquement d'anciens paquets Docker conflictuels.
