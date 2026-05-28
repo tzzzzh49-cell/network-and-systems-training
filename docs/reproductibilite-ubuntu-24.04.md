@@ -1,10 +1,10 @@
-# Reproductibilité sur Fedora 44 Workstation VM
+# Reproductibilité sur Ubuntu 24.04.4 LTS
 
-Ce guide décrit un flux reproductible **validé/à valider uniquement pour Fedora 44 Workstation VM**.
+Ce guide décrit un flux reproductible **validé/à valider uniquement pour Ubuntu 24.04.4 LTS**.
 
-## Pré-requis Fedora
+## Pré-requis Ubuntu
 
-- VM Fedora 44 Workstation à jour
+- VM Ubuntu 24.04.4 LTS à jour
 - Utilisateur avec droits `sudo`
 - Accès réseau sortant (GitHub + Docker Hub + dépôt Docker)
 - Git installé (sinon via le script de bootstrap)
@@ -16,16 +16,16 @@ git clone <URL_DU_DEPOT>
 cd network-and-systems-training
 ```
 
-## 2) Bootstrap système Fedora
+## 2) Bootstrap système Ubuntu
 
 ```bash
-make bootstrap-fedora
+make bootstrap-ubuntu
 ```
 
 Ce script :
-- met à jour Fedora ;
+- met à jour l'index APT ;
 - installe les outils nécessaires (`git`, `curl`, `make`, `python3`, `ansible`, `shellcheck`, etc.) ;
-- installe Docker Engine + plugin Docker Compose ;
+- installe Docker Engine + plugin Docker Compose depuis le dépôt Docker officiel ;
 - active le service Docker ;
 - ajoute l'utilisateur courant au groupe `docker`.
 

@@ -1,34 +1,62 @@
- # Network and Systems Training
+# Network and Systems Training
 
-Projet d’apprentissage autour de Linux, des réseaux, de Docker, de FastAPI, de l’automatisation et de la cybersécurité défensive.
+Projet d'apprentissage autour de Linux, réseau, Docker, FastAPI, automatisation et diagnostic défensif.
 
-L’objectif est de construire progressivement un lab capable de :
+## Objectif
 
-- exposer une API FastAPI minimale ;
-- lancer des diagnostics système et réseau en lecture seule ;
-- produire des rapports techniques ;
-- être déployé plus tard sur un VPS ;
-- intégrer progressivement les API OpenAI et OpenClaw de manière sécurisée.
+Permettre à une personne de :
 
-## Statut actuel
+1. cloner le dépôt ;
+2. installer les prérequis adaptés à sa distribution ;
+3. lancer l'application avec Docker Compose ;
+4. tester `/health`, `/version`, `/diag` ;
+5. arrêter proprement le projet.
 
-- Reproduction testée sur une VM Fedora 44
-- API FastAPI fonctionnelle
-- Docker Compose fonctionnel
-- Makefile en cours de stabilisation
-- Documentation en cours
-- Tests automatisés prévus au deuxième mois
+## Matrice de compatibilité Linux
 
-## Sécurité
+| Distribution | Version | Statut |
+|---|---|---|
+| Fedora Workstation VM | 44 | Cible validée/à valider |
+| Ubuntu LTS | 24.04.4 | Cible validée/à valider |
 
-Le projet démarre volontairement en mode lecture seule.  
-Aucune commande destructive ne doit être automatisée à ce stade.
+> Le projet **ne prétend pas** fonctionner sur toutes les distributions Linux à ce stade.
+
+## Pré-requis
+
+- Git
+- Docker Engine
+- Docker Compose plugin (`docker compose`)
+- Make
+- Curl
+- Python 3
+- Ansible
+
+Les prérequis sont installés automatiquement via les scripts de bootstrap ci-dessous.
+
+## Bootstrap par distribution
+
+### Fedora 44 Workstation VM
+
+```bash
+make bootstrap-fedora
+```
+
+Documentation détaillée : `docs/reproductibilite-fedora-44-vm.md`.
+
+### Ubuntu 24.04.4 LTS
+
+```bash
+make bootstrap-ubuntu
+```
+
+Documentation détaillée : `docs/reproductibilite-ubuntu-24.04.md`.
 
 ## Démarrage rapide
 
 ```bash
 git clone <url-du-repo>
 cd network-and-systems-training
+make check
 make build
 make up
 make health
@@ -37,15 +65,22 @@ make diag
 make down
 ```
 
-## Commandes disponibles
+## Commandes Makefile
 
 | Commande | Description |
 |---|---|
-| `make help` | Affiche les commandes disponibles |
-| `make build` | Construit l’image Docker |
-| `make up` | Lance l’application |
-| `make health` | Vérifie `/health` |
-| `make version` | Vérifie `/version` |
-| `make diag` | Vérifie `/diag` |
-| `make logs` | Affiche les logs Docker |
-| `make down` | Arrête l’application |
+| `make bootstrap-fedora` | Installe les prérequis sur Fedora 44 VM |
+| `make bootstrap-ubuntu` | Installe les prérequis sur Ubuntu 24.04.4 LTS |
+| `make check` | Vérifie l'environnement de reproductibilité |
+| `make build` | Construit l'image Docker |
+| `make up` | Démarre l'application via Docker Compose |
+| `make health` | Teste `GET /health` |
+| `make version` | Teste `GET /version` |
+| `make diag` | Teste `GET /diag` |
+| `make down` | Arrête proprement le projet |
+
+## Documentation de reproductibilité
+
+- `docs/reproductibilite-linux-generique.md`
+- `docs/reproductibilite-fedora-44-vm.md`
+- `docs/reproductibilite-ubuntu-24.04.md`
