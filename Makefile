@@ -1,40 +1,41 @@
-.PHONY: help check bootstrap build up down logs health version diag diagnostic clean
+.PHONY: help check bootstrap bootstrap-fedora bootstrap-ubuntu build up down logs health version diag diagnostic test clean
 
 APP_URL ?= http://127.0.0.1:8000
-COMPOSE ?= docker compose
+COMPOSE ?= ./scripts/compose.sh
 CURL ?= curl -fsS
 
 help:
 	@echo "Commandes disponibles :"
 	@echo ""
-	@echo "  make help        Affiche cette aide"
-	@echo "  make check       Vérifie les prérequis locaux"
-	@echo "  make bootstrap   Prépare l'environnement Fedora 44"
-	@echo "  make build       Construit l'image Docker"
-	@echo "  make up          Lance l'application"
-	@echo "  make down        Arrête l'application"
-	@echo "  make logs        Affiche les logs Docker"
-	@echo "  make health      Teste l'endpoint /health"
-	@echo "  make version     Teste l'endpoint /version"
-	@echo "  make diag        Teste l'endpoint /diag"
-	@echo "  make diagnostic  Alias de make diag"
-	@echo "  make clean       Nettoyage léger"
+	@echo "  make help              Affiche cette aide"
+	@echo "  make check             Vérifie l'environnement de reproductibilité"
+	@echo "  make bootstrap         Alias de make bootstrap-fedora"
+	@echo "  make bootstrap-fedora  Prépare l'environnement Fedora 44"
+	@echo "  make bootstrap-ubuntu  Prépare l'environnement Ubuntu 24.04.4 LTS"
+	@echo "  make build             Construit l'image Docker"
+	@echo "  make up                Lance l'application"
+	@echo "  make down              Arrête l'application"
+	@echo "  make logs              Affiche les logs Docker"
+	@echo "  make health            Teste l'endpoint /health"
+	@echo "  make version           Teste l'endpoint /version"
+	@echo "  make diag              Teste l'endpoint /diag"
+	@echo "  make diagnostic        Alias de make diag"
+	@echo "  make test              Alias de make health"
+	@echo "  make clean             Nettoyage léger"
 	@echo ""
 	@echo "Variable utile :"
 	@echo "  APP_URL=$(APP_URL)"
 
-check:
-	@echo "Vérification des prérequis..."
-	@command -v git >/dev/null || { echo "git est manquant"; exit 1; }
-	@command -v docker >/dev/null || { echo "docker est manquant"; exit 1; }
-	@docker compose version >/dev/null || { echo "docker compose est manquant"; exit 1; }
-	@command -v curl >/dev/null || { echo "curl est manquant"; exit 1; }
-	@test -f compose.yaml || { echo "compose.yaml est manquant"; exit 1; }
-	@test -f scripts/bootstrap_fedora44_vm.sh || { echo "scripts/bootstrap_fedora44_vm.sh est manquant"; exit 1; }
-	@echo "OK : prérequis disponibles"
+bootstrap: bootstrap-fedora
 
-bootstrap:
+bootstrap-fedora:
 	./scripts/bootstrap_fedora44_vm.sh
+
+bootstrap-ubuntu:
+	./scripts/bootstrap_ubuntu2404.sh
+
+check:
+	./scripts/check_reproducibility.sh
 
 build:
 	$(COMPOSE) build
@@ -61,6 +62,8 @@ diag:
 	@echo ""
 
 diagnostic: diag
+
+test: health
 
 clean:
 	$(COMPOSE) down
