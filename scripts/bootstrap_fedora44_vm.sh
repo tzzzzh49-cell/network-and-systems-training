@@ -52,8 +52,8 @@ echo "==> Ajout de l'utilisateur courant au groupe docker"
 sudo usermod -aG docker "$USER"
 
 echo
-echo "Installation terminée."
-echo "IMPORTANT : déconnecte-toi/reconnecte-toi dans la VM."
+echo "Installation Fedora 44 terminée."
+echo "IMPORTANT : déconnecte-toi/reconnecte-toi dans la VM pour appliquer le groupe docker."
 echo
 echo "Puis vérifie :"
 echo "  docker --version"

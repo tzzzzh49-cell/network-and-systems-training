@@ -1,25 +1,25 @@
-# Reproductibilité — Fedora 44 Workstation VM
+# Reproductibilité — Ubuntu 24.04.4 LTS
 
 ## Cible
 
-- Distribution : Fedora 44 Workstation (VM)
+- Distribution : Ubuntu 24.04.4 LTS
 - Statut : cible validée / à revérifier à chaque changement majeur du dépôt
 
-## Bootstrap Fedora
+## Bootstrap Ubuntu
 
 ```bash
-make bootstrap-fedora
+make bootstrap-ubuntu
 ```
 
 Commande équivalente :
 
 ```bash
-./scripts/bootstrap_fedora44_vm.sh
+./scripts/bootstrap_ubuntu2404.sh
 ```
 
 Le script installe les dépendances nécessaires (Git, Make, Python, Ansible, Docker Engine, Docker Compose plugin) et active le service Docker.
 
-> Important : après l’ajout au groupe `docker`, déconnecte-toi/reconnecte-toi à la session VM.
+> Important : après l’ajout au groupe `docker`, déconnecte-toi/reconnecte-toi à la session.
 
 ## Vérification de la chaîne locale
 
