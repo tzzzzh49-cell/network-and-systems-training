@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# shellcheck disable=SC2129
 
 # Script de diagnostic local pour le projet voice-controlled-network-lab.
 # Objectif : observer l'état du système et générer un rapport Markdown.

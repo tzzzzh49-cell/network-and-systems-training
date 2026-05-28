@@ -15,6 +15,10 @@ for attempt in $(seq 1 30); do
         exit 0
     fi
 
+    if [ "$attempt" = "30" ]; then
+        break
+    fi
+
     sleep 1
 done
 

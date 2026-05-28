@@ -31,7 +31,7 @@ Ce script :
 
 > Après exécution : **se déconnecter/reconnecter** à la session pour appliquer le groupe `docker`.
 
-## 3) Vérifier l'environnement
+## 3) Vérifier rapidement l'environnement
 
 ```bash
 make check
@@ -52,7 +52,15 @@ make version
 make diag
 ```
 
-## 6) Arrêt propre
+## 6) Validation complète
+
+```bash
+make check-full
+```
+
+Cette commande lance aussi un build Docker et le playbook Ansible en mode check.
+
+## 7) Arrêt propre
 
 ```bash
 make down
