@@ -25,7 +25,7 @@ Docker Compose
 Application FastAPI
    ↓
 Endpoints : /health, /version, /diag
-````
+```
 
 ## Composants
 
