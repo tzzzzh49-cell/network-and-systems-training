@@ -7,7 +7,7 @@ usage() {
     cat <<'USAGE'
 Usage: ./scripts/check_reproducibility.sh [--quick|--full]
 
---quick  Vérifie les prérequis, les fichiers, la syntaxe Python, Compose et Bash.
+--quick  Vérifie les prérequis, les fichiers, la syntaxe Python, les tests, Compose et Bash.
 --full   Exécute aussi le build Docker et le playbook Ansible en mode check.
 USAGE
 }
@@ -130,6 +130,27 @@ check_python() {
     echo "OK   app/main.py est syntaxiquement valide"
 }
 
+check_pytest() {
+    echo
+    echo "==> Tests Python"
+
+    if [ ! -d app/tests ]; then
+        echo "ERREUR : dossier de tests introuvable : app/tests" >&2
+        echo "Crée d'abord les tests pytest dans app/tests/." >&2
+        exit 1
+    fi
+
+    if ! python3 -m pytest --version >/dev/null 2>&1; then
+        echo "ERREUR : pytest est introuvable." >&2
+        echo "Installe les dépendances de développement :" >&2
+        echo "  python3 -m pip install -r app/requirements-dev.txt" >&2
+        exit 1
+    fi
+
+    PYTHONPATH=. python3 -m pytest app/tests -v
+    echo "OK   tests Python validés"
+}
+
 check_compose() {
     echo
     echo "==> Vérification Docker Compose"
@@ -159,6 +180,7 @@ check_versions
 check_paths
 check_no_conflict_markers
 check_python
+check_pytest
 check_compose
 check_shell_scripts
 

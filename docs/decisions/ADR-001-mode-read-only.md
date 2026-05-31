@@ -37,11 +37,13 @@ df -h
 free -h
 uptime
 hostnamectl
+```
 
-Commandes refusées au départ
+## Commandes refusées au départ
 
 Exemples :
 
+```bash
 rm -rf
 mkfs
 dd
@@ -49,24 +51,29 @@ ip route del
 docker system prune
 reboot
 shutdown
-Conséquences positives
-le projet est plus sûr ;
-les erreurs sont moins dangereuses ;
-la documentation est plus claire ;
-l’intégration future d’OpenClaw sera mieux contrôlée ;
-le projet montre une démarche cybersécurité défensive.
-Conséquences négatives
-certaines automatisations seront plus lentes à développer ;
-le projet ne corrigera pas automatiquement les problèmes au début ;
-certaines actions devront rester manuelles.
-Évolution possible
+```
+
+## Conséquences positives
+
+- le projet est plus sûr ;
+- les erreurs sont moins dangereuses ;
+- la documentation est plus claire ;
+- l’intégration future d’OpenClaw sera mieux contrôlée ;
+- le projet montre une démarche cybersécurité défensive.
+
+## Conséquences négatives
+
+- certaines automatisations seront plus lentes à développer ;
+- le projet ne corrigera pas automatiquement les problèmes au début ;
+- certaines actions devront rester manuelles.
+
+## Évolution possible
 
 Une future version pourra ajouter des actions correctives, mais uniquement avec :
 
-validation humaine ;
-logs ;
-sauvegarde préalable ;
-documentation ;
-tests ;
-allowlist stricte.
-
+- validation humaine ;
+- logs ;
+- sauvegarde préalable ;
+- documentation ;
+- tests ;
+- allowlist stricte.

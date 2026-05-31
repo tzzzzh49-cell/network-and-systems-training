@@ -27,7 +27,7 @@ help:
 	@echo "  make diagnostic        Alias de make diag"
 	@echo "  make diagnostic-local  Génère un rapport local read-only"
 	@echo "  make ansible-check     Lance le playbook Ansible en mode check"
-	@echo "  make test              Alias de make health"
+	@echo "  make test              Lance les tests Python"
 	@echo "  make clean             Nettoyage léger"
 	@echo ""
 	@echo "Variable utile :"
@@ -90,7 +90,8 @@ diagnostic-local:
 ansible-check:
 	ansible-playbook -i ansible/inventory.yml ansible/playbooks/diagnostic.yml --check
 
-test: health
+test:
+	PYTHONPATH=. python -m pytest app/tests -v
 
 clean:
 	$(COMPOSE) down

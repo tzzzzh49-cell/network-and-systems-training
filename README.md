@@ -10,7 +10,7 @@ Permettre à une personne de :
 2. installer les prérequis adaptés à sa distribution ;
 3. valider rapidement l'état du dépôt ;
 4. lancer l'application avec Docker Compose ;
-5. tester `/health`, `/version`, `/diag` ;
+5. tester `/`, `/health`, `/version`, `/diag` ;
 6. arrêter proprement le projet.
 
 ## Statut du projet
@@ -21,10 +21,11 @@ Le projet est actuellement une base de lab systèmes/réseaux/DevOps/cybersécur
 
 Fonctionnalités disponibles :
 - API FastAPI minimale ;
-- endpoints `/health`, `/version` et `/diag` ;
+- endpoints `/`, `/health`, `/version` et `/diag` ;
 - lancement avec Docker Compose ;
 - commandes Makefile principales ;
-- validation rapide du dépôt avec `make check` ;
+- tests automatisés avec pytest ;
+- validation rapide du dépôt avec `make check` / `make check-fast` ;
 - validation complète de reproductibilité avec `make check-full` ;
 - reproduction testée sur VM Fedora 44 ;
 - documentation de reproductibilité Fedora et Ubuntu ;
@@ -32,7 +33,6 @@ Fonctionnalités disponibles :
 - règles de sécurité en lecture seule.
 
 Fonctionnalités prévues :
-- tests automatisés avec pytest ;
 - lint Python avec ruff ;
 - CI GitHub Actions ;
 - diagnostic réseau plus avancé ;
@@ -57,10 +57,13 @@ Fonctionnalités prévues :
 - Make
 - Curl
 - Python 3
+- Pytest
 - Ansible
 - ShellCheck
 
 Les prérequis sont installés automatiquement via les scripts de bootstrap ci-dessous.
+
+Les dépendances Python de développement sont listées dans `app/requirements-dev.txt`.
 
 ## Bootstrap par distribution
 
@@ -88,6 +91,7 @@ cd network-and-systems-training
 make check
 make build
 make up
+curl -fsS http://127.0.0.1:8000/
 make health
 make version
 make diag
@@ -112,6 +116,7 @@ make check-full
 |---|---|
 | `make help` | Affiche les commandes disponibles |
 | `make check` | Vérifie rapidement le dépôt |
+| `make check-fast` | Alias de `make check` |
 | `make check-full` | Lance la validation complète avec build Docker et Ansible |
 | `make bootstrap` | Alias de `make bootstrap-fedora` |
 | `make bootstrap-fedora` | Installe les prérequis sur Fedora 44 VM |
@@ -126,9 +131,21 @@ make check-full
 | `make diag` | Teste `GET /diag` |
 | `make diagnostic-local` | Génère un rapport local read-only |
 | `make ansible-check` | Lance le playbook Ansible en mode check |
+| `make test` | Lance les tests Python |
 | `make logs` | Affiche les logs Docker |
 | `make down` | Arrête proprement le projet |
 | `make clean` | Effectue un nettoyage léger |
+
+## Tests
+
+Les tests automatisés couvrent les fonctions associées aux endpoints FastAPI.
+
+```bash
+python3 -m pip install -r app/requirements-dev.txt
+make test
+```
+
+`make check` lance aussi ces tests, en plus des vérifications de fichiers, syntaxe Python, Docker Compose et ShellCheck.
 
 ## Workflow de développement recommandé
 

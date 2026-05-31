@@ -369,3 +369,28 @@ Le mois 2 sera consacré à :
 - vérifier les scripts Bash avec `shellcheck` ;
 - ajouter une CI GitHub Actions ;
 - préparer la version `v0.2.0`.
+
+## Mois 2 — Semaine 1 — Premiers tests automatisés
+
+Objectif de la semaine : ajouter des tests Python avec pytest pour vérifier automatiquement l’API FastAPI.
+
+Ce que j’ai ajouté :
+- un fichier `app/requirements-dev.txt` ;
+- un dossier `app/tests/` ;
+- des tests pour `/`, `/health`, `/version` et `/diag` ;
+- une vraie commande `make test`.
+
+Ce que j’ai appris :
+- différence entre dépendances runtime et dépendances de développement ;
+- rôle de `pytest` ;
+- rôle de `TestClient` avec FastAPI ;
+- importance de tester la structure des réponses JSON ;
+- intérêt de lancer les tests avant chaque commit.
+
+Difficultés rencontrées :
+- import Python depuis la racine du projet ;
+- distinction entre test manuel avec `curl` et test automatisé ;
+- adaptation du Makefile.
+
+Résultat :
+- les tests peuvent être lancés avec `make test`.

@@ -37,7 +37,7 @@ uptime
 hostnamectl
 systemctl status
 journalctl --no-pager
-````
+```
 
 ## Commandes interdites au début
 
@@ -143,7 +143,4 @@ Cherche les mots sensibles dans ton dépôt :
 
 ```bash
 git grep -n "OPENAI_API_KEY\|password\|token\|secret\|PRIVATE KEY" || true
-```
-
-```
 ```
